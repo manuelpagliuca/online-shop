@@ -1,22 +1,58 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+/* Imposta il colore di sfondo su bianco per la barra di navigazione */
+.navbar {
+    background-color: white;
+}
+
+/* Aggiungi un'animazione di sottolineatura ai link quando ci si passa sopra */
+.navbar-nav .nav-item a.nav-link {
+    text-decoration: none;
+    position: relative;
+}
+
+    .navbar-nav .nav-item a.nav-link:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px; /* Altezza della sottolineatura */
+        bottom: 0;
+        left: 0;
+        background-color: blue; /* Colore della sottolineatura */
+        visibility: hidden;
+        transform: scaleX(0);
+        transition: all 0.3s ease-in-out; /* Animazione */
+    }
+
+    .navbar-nav .nav-item a.nav-link:hover:before {
+        visibility: visible;
+        transform: scaleX(1);
+    }
+
+.centered-container {
+    display: flex;
+    justify-content: center; /* Centro orizzontalmente */
+    align-items: center; /* Centro verticalmente */
+    height: 100vh; /* Altezza della viewport per centrare verticalmente */
 }

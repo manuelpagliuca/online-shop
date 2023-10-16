@@ -21,7 +21,7 @@ namespace Ubique.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Ubique.Models.Category", b =>
+            modelBuilder.Entity("Ubique.Models.Bath", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,32 +38,32 @@ namespace Ubique.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("BathComponents");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            Name = "Bagno"
+                            Name = "Rubinetteria Lavabo"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "Serramenti"
+                            Name = "Rubinetteria Bidet"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            Name = "Piastrelle"
+                            Name = "Rubinetti Giardino"
                         },
                         new
                         {
                             Id = 4,
                             DisplayOrder = 4,
-                            Name = "Varie"
+                            Name = "Rubinetti per Camper e Barche"
                         });
                 });
 #pragma warning restore 612, 618
