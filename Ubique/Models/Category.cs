@@ -2,7 +2,7 @@
 
 namespace Ubique.Models
 {
-	public class Bath
+	public class Category
 	{
 		[Key]
 		public int Id { get; set; }
