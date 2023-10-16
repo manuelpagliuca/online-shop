@@ -2,9 +2,9 @@
 
 namespace Ubique.Controllers
 {
-	public class ShopController : Controller
+	public class CategoryController : Controller
 	{
-		public IActionResult Index(string category)
+		public IActionResult Index()
 		{
 			return View();
 		}
