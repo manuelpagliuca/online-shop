@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Ubique</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/ubique.styles.css" asp-append-version="true" />
+</head>
+<body>
+	<header>
+		<!-- Navigation-->
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container px-4 px-lg-5">
+				<a class="navbar-brand" href="#!">Ubique</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+						<li class="nav-item">
+							<form class="d-flex">
+								<input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Cerca">
+							</form>
+						</li>
+
+
+					</ul>
+
+					<form class="d-flex">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+							<li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Login</a></li>
+							<li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Register</a></li>
+
+						</ul>
+
+						<button class="btn btn-outline-dark" type="submit">
+							<i class="bi-cart-fill me-1"></i>
+							Cart
+							<span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+						</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container px-4 px-lg-5">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 ">
+
+						<li class="nav-item"><a class="nav-link active" asp-controller="Shop" asp-action="Index" asp-route-category="Bagno">Bagno</a></li>
+						<li class="nav-item"><a class="nav-link active" asp-controller="Shop" asp-action="Index">Serramenti</a></li>
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<!-- Footer-->
+	<footer class="py-5 bg-dark">
+		<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+	</footer>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
