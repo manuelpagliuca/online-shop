@@ -16,7 +16,7 @@ namespace Ubique.Controllers
 		public IActionResult Index()
 		{
 			List<Category> subCategories = _db.Categories.ToList();
-			return View();
+			return View(subCategories);
 		}
 	}
 }

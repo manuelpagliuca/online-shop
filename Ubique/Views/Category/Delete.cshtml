@@ -1,0 +1,42 @@
+﻿@model Category
+
+<form method="post">
+	@*	This could be need in the case the updating id isn't populated (0), it avoids creating a new field
+	with .UpdateChanges(..)
+	<input asp-for="Id" hidden/>*@
+
+	<div class="border p-3 mt-4">
+		<div class="pb-2 row">
+			<h2 class="text-primary">Delete Category</h2>
+			<hr />
+		</div>
+
+		<div class="mb-3 row p-1">
+
+			<label asp-for="Name" class="p-0"></label>
+
+			<input asp-for="Name" type="text" class="form-control" disabled />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+		<div class="mb-3 row p-1">
+
+			<label asp-for="DisplayOrder" class="p-0"></label>
+			<input asp-for="DisplayOrder" type="text" class="form-control" disabled />
+			<span asp-validation-for="DisplayOrder" class="text-danger"></span>
+		</div>
+		<div class="row">
+			<div class="col-6 col-md-3">
+				<button type="submit" class="btn btn-danger form-control">Delete</button>
+			</div>
+			<div class="col-6 col-md-3">
+				<a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary border form-control">Back To List</a>
+			</div>
+		</div>
+	</div>
+</form>
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}
