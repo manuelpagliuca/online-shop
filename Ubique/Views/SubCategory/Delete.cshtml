@@ -1,4 +1,4 @@
-﻿@model Category
+﻿@model SubCategory
 
 <form method="post">
 	@*	This could be need in the case the updating id isn't populated (0), it avoids creating a new field
@@ -7,7 +7,7 @@
 
 	<div class="border p-3 mt-4">
 		<div class="pb-2 row">
-			<h2 class="text-primary">Rimuovi Categoria</h2>
+			<h2 class="text-primary">Rimuovi SottoCategoria</h2>
 			<hr />
 		</div>
 
@@ -18,18 +18,12 @@
 			<input asp-for="Name" type="text" class="form-control" disabled />
 			<span asp-validation-for="Name" class="text-danger"></span>
 		</div>
-		<div class="mb-3 row p-1">
-
-			<label asp-for="DisplayOrder" class="p-0"></label>
-			<input asp-for="DisplayOrder" type="text" class="form-control" disabled />
-			<span asp-validation-for="DisplayOrder" class="text-danger"></span>
-		</div>
 		<div class="row">
 			<div class="col-6 col-md-3">
 				<button type="submit" class="btn btn-danger form-control">Rimuovi</button>
 			</div>
 			<div class="col-6 col-md-3">
-				<a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary border form-control">Torna alle categorie</a>
+				<a asp-controller="SubCategory" asp-action="Index" class="btn btn-outline-secondary border form-control">Torna alle sottocategorie</a>
 			</div>
 		</div>
 	</div>

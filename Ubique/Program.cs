@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Ubique.Data;
+using Ubique.DataAccess.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

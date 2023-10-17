@@ -1,15 +1,15 @@
-﻿@model List<Category>
+﻿@model List<SubCategory>
 
 <div class="container">
 	<div class="row pt-4 pb-3">
 		<div class="col-6">
 			<h2 class="text-primary">
-				Categorie
+				SottoCategorie
 			</h2>
 		</div>
 		<div class="col-6 text-end">
-			<a asp-controller="Category" asp-action="Create" class="btn btn-primary">
-				<i class="bi bi-plus-circle"></i> Crea Categoria
+			<a asp-controller="SubCategory" asp-action="Create" class="btn btn-primary">
+				<i class="bi bi-plus-circle"></i> Crea SottoCategoria
 			</a>
 		</div>
 	</div>
@@ -19,10 +19,10 @@
 	<thead>
 		<tr>
 			<th>
-				Nome Categoria
+				Nome SottoCategoria
 			</th>
 			<th>
-				Ordine Visualizzazione
+				Nome Categoria
 			</th>
 		</tr>
 	</thead>
@@ -32,17 +32,18 @@
 		{
 			<tr>
 				<td>@obj.Name</td>
-				<td>@obj.DisplayOrder</td>
+				<td>@obj.Category.Name</td>
+
 				<td>
 					<div class="w-75 btn-group" role="group">
-						<a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+						<a asp-controller="SubCategory" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
 							<i class="bi bi-pencil-square"></i> Modifica
 						</a>
 					</div>
 				</td>
 				<td>
 					<div class="w-75 btn-group" role="group">
-						<a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+						<a asp-controller="SubCategory" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
 							<i class="bi bi-trash-fill"></i> Rimuovi
 						</a>
 					</div>

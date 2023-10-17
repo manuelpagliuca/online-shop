@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ubique.Models;
 
-namespace Ubique.Data
+namespace Ubique.DataAccess.Data
 {
 	public class ApplicationDbContext : DbContext
 	{
@@ -21,10 +21,9 @@ namespace Ubique.Data
 				new Category { Id = 3, Name = "Cascata", DisplayOrder = 3 });
 
 			modelBuilder.Entity<SubCategory>().HasData(
-				new SubCategory { Id = 1, Name = "Monoleva", CategoryId = 1, DisplayOrder = 1 },
-				new SubCategory { Id = 2, Name = "Due maniglie", CategoryId = 1, DisplayOrder = 2 },
-				new SubCategory { Id = 3, Name = "Termostatico", CategoryId = 3, DisplayOrder = 3 }
-				);
+				new SubCategory { Id = 1, Name = "Monoleva", CategoryId = 1 },
+				new SubCategory { Id = 2, Name = "Due maniglie", CategoryId = 1 },
+				new SubCategory { Id = 3, Name = "Termostatico", CategoryId = 3 });
 		}
 	}
 }

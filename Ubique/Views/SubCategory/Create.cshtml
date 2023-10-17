@@ -1,0 +1,40 @@
+﻿@model SubCategoryVM
+
+<form method="post">
+	<div class="border p-3 mt-4">
+		<div class="pb-2 row">
+			<h2 class="text-primary">Crea SottoCategoria</h2>
+			<hr />
+		</div>
+		<div asp-validation-summary="All"></div>
+		<div class="mb-3 row p-1">
+			<label asp-for="SubCategory.CategoryId" class="p-0"></label>
+			<select asp-for="SubCategory.CategoryId" class="form-control">
+				@foreach (var category in Model.Categories)
+				{
+					<option value="@category.Id">@category.Name</option>
+				}
+			</select>
+			<span asp-validation-for="SubCategory.Category" class="text-danger"></span>
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="SubCategory.Name" class="p-0"></label>
+			<input asp-for="SubCategory.Name" type="text" class="form-control" />
+			<span asp-validation-for="SubCategory.Name" class="text-danger"></span>
+		</div>
+		<div class="row">
+			<div class="col-6 col-md-3">
+				<button type="submit" class="btn btn-primary form-control">Crea</button>
+			</div>
+			<div class="col-6 col-md-3">
+				<a asp-controller="SubCategory" asp-action="Index" class="btn btn-outline-secondary border form-control">Torna alle sottocategorie</a>
+			</div>
+		</div>
+	</div>
+</form>
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

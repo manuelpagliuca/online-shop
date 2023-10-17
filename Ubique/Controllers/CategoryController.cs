@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Ubique.Data;
+using Ubique.DataAccess.Data;
 using Ubique.Models;
 
 namespace Ubique.Controllers
 {
 	public class CategoryController : Controller
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly DataAccess.Data.ApplicationDbContext _db;
 
 		public CategoryController(ApplicationDbContext db)
 		{
@@ -29,7 +29,6 @@ namespace Ubique.Controllers
 		{
 			if (obj.Name == obj.DisplayOrder.ToString())
 			{
-				// If the custom validation is not passing, then we add an error to the model, so that it is possible to display it through helpers-tag.
 				ModelState.AddModelError("Name", "Il campo \"Ordine Visualizzazione\" non può essere uguale al campo \"Nome Categoria\".");
 			}
 

@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Ubique.Migrations
+namespace Ubique.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class ChangeBathToFaucetAndSeedDb : Migration
