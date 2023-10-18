@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ubique.DataAccess.Data;
+using Ubique.DataAccess.Repository;
+using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
 using Ubique.Models.ViewModels;
 
@@ -7,20 +9,22 @@ namespace Ubique.Controllers
 {
 	public class SubCategoryController : Controller
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly ISubCategoryRepository _subCategoryRepository;
+		private readonly ICategoryRepository _categoryRepository;
 
-		public SubCategoryController(ApplicationDbContext db)
+		public SubCategoryController(ISubCategoryRepository subCategoryRepository, ICategoryRepository categoryRepository)
 		{
-			_db = db;
+			_subCategoryRepository = subCategoryRepository;
+			_categoryRepository = categoryRepository;
 		}
 
 		public IActionResult Index()
 		{
-			List<SubCategory> subCategories = _db.SubCategories.ToList();
+			List<SubCategory> subCategories = _subCategoryRepository.GetAll().ToList();
 
 			foreach (SubCategory subCategory in subCategories)
 			{
-				subCategory.Category = _db.Categories.Find(subCategory.CategoryId);
+				subCategory.Category = _categoryRepository.Get(u => u.Id == subCategory.CategoryId);
 			}
 
 			return View(subCategories);
@@ -31,7 +35,7 @@ namespace Ubique.Controllers
 			SubCategoryVM viewModel = new()
 			{
 				SubCategory = new SubCategory(),
-				Categories = _db.Categories.ToList()
+				Categories = _categoryRepository.GetAll().ToList()
 			};
 
 			return View(viewModel);
@@ -40,13 +44,13 @@ namespace Ubique.Controllers
 		[HttpPost]
 		public IActionResult Create(SubCategory subCategory)
 		{
-			Category? category = _db.Categories.Find(subCategory.CategoryId);
+			Category? category = _categoryRepository.Get(u => u.Id == subCategory.CategoryId);
 
 			if (category != null)
 			{
 				subCategory.Category = category;
-				_db.SubCategories.Add(subCategory);
-				_db.SaveChanges();
+				_subCategoryRepository.Add(subCategory);
+				_subCategoryRepository.Save();
 				TempData["success"] = "SottoCategoria creata con successo!";
 				return RedirectToAction("Index", "SubCategory");
 			}
@@ -65,7 +69,7 @@ namespace Ubique.Controllers
 				return NotFound();
 			}
 
-			SubCategory? subCategory = _db.SubCategories.Find(id);
+			SubCategory? subCategory = _subCategoryRepository.Get(u => u.Id == id);
 
 			if (subCategory == null)
 			{
@@ -75,7 +79,7 @@ namespace Ubique.Controllers
 			SubCategoryVM viewModel = new()
 			{
 				SubCategory = subCategory,
-				Categories = _db.Categories.ToList()
+				Categories = _categoryRepository.GetAll().ToList()
 			};
 
 			return View(viewModel);
@@ -84,13 +88,13 @@ namespace Ubique.Controllers
 		[HttpPost]
 		public IActionResult Edit(SubCategoryVM viewModel)
 		{
-			viewModel.Categories = _db.Categories.ToList();
-			viewModel.SubCategory.Category = _db.Categories.Find(viewModel.SubCategory.CategoryId);
+			viewModel.Categories = _categoryRepository.GetAll().ToList();
+			viewModel.SubCategory.Category = _categoryRepository.Get(u => u.Id == viewModel.SubCategory.CategoryId);
 
 			if (viewModel.SubCategory != null)
 			{
-				_db.SubCategories.Update(viewModel.SubCategory);
-				_db.SaveChanges();
+				_subCategoryRepository.Update(viewModel.SubCategory);
+				_subCategoryRepository.Save();
 				TempData["success"] = "SottoCategoria aggiornata con successo!";
 				return RedirectToAction("Index", "SubCategory");
 			}
@@ -105,7 +109,7 @@ namespace Ubique.Controllers
 				return NotFound();
 			}
 
-			SubCategory? subCategoryFromDb = _db.SubCategories.Find(id);
+			SubCategory? subCategoryFromDb = _subCategoryRepository.Get(u => u.Id == id);
 
 			if (subCategoryFromDb == null)
 			{
@@ -118,15 +122,15 @@ namespace Ubique.Controllers
 		[HttpPost, ActionName("Delete")]
 		public IActionResult DeletePOST(int? id)
 		{
-			SubCategory? subCategory = _db.SubCategories.Find(id);
+			SubCategory? subCategory = _subCategoryRepository.Get(u => u.Id == id);
 
 			if (subCategory == null)
 			{
 				return NotFound();
 			}
 
-			_db.SubCategories.Remove(subCategory);
-			_db.SaveChanges();
+			_subCategoryRepository.Remove(subCategory);
+			_subCategoryRepository.Save();
 			TempData["success"] = "SottoCategoria rimossa con successo!";
 			return RedirectToAction("Index");
 		}
