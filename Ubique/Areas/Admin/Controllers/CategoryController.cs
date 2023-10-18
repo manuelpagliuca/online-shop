@@ -9,7 +9,6 @@ namespace Ubique.Areas.Admin.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
 
-
         public CategoryController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

@@ -15,7 +15,7 @@ namespace Ubique.DataAccess.Repository
 
 		public void Update(Product product)
 		{
-			_db.Products.Add(product);
+			_db.Products.Update(product);
 		}
 	}
 }
