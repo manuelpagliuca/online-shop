@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Ubique.DataAccess.Data;
+using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
 
 namespace Ubique.Controllers
 {
 	public class CategoryController : Controller
 	{
-		private readonly DataAccess.Data.ApplicationDbContext _db;
+		private readonly ICategoryRepository _categoryRepository;
 
-		public CategoryController(ApplicationDbContext db)
+		public CategoryController(ICategoryRepository categoryRepository)
 		{
-			_db = db;
+			_categoryRepository = categoryRepository;
 		}
 
 		public IActionResult Index()
 		{
-			List<Category> categories = _db.Categories.ToList();
+			List<Category> categories = _categoryRepository.GetAll().ToList();
 			return View(categories);
 		}
 
@@ -34,8 +34,8 @@ namespace Ubique.Controllers
 
 			if (ModelState.IsValid)
 			{
-				_db.Categories.Add(obj);
-				_db.SaveChanges();
+				_categoryRepository.Add(obj);
+				_categoryRepository.Save();
 				TempData["success"] = "Categoria creata con successo!";
 				return RedirectToAction("Index", "Category");
 			}
@@ -50,7 +50,7 @@ namespace Ubique.Controllers
 				return NotFound();
 			}
 
-			Category? fromDb = _db.Categories.Find(id);
+			Category? fromDb = _categoryRepository.Get(u => u.Id == id);
 
 			if (fromDb == null)
 			{
@@ -65,8 +65,8 @@ namespace Ubique.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_db.Categories.Update(obj);
-				_db.SaveChanges();
+				_categoryRepository.Update(obj);
+				_categoryRepository.Save();
 				TempData["success"] = "Categoria aggiornata con successo!";
 				return RedirectToAction("Index", "Category");
 			}
@@ -81,7 +81,7 @@ namespace Ubique.Controllers
 				return NotFound();
 			}
 
-			Category? categoryFromDb = _db.Categories.Find(id);
+			Category? categoryFromDb = _categoryRepository.Get(u => u.Id == id);
 
 			if (categoryFromDb == null)
 			{
@@ -94,15 +94,15 @@ namespace Ubique.Controllers
 		[HttpPost, ActionName("Delete")]
 		public IActionResult DeletePOST(int? id)
 		{
-			Category? obj = _db.Categories.Find(id);
+			Category? obj = _categoryRepository.Get(u => u.Id == id);
 
 			if (obj == null)
 			{
 				return NotFound();
 			}
 
-			_db.Categories.Remove(obj);
-			_db.SaveChanges();
+			_categoryRepository.Remove(obj);
+			_categoryRepository.Save();
 			TempData["success"] = "Categoria rimossa con successo!";
 			return RedirectToAction("Index");
 		}
