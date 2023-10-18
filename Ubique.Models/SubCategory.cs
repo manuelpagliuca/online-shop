@@ -9,8 +9,8 @@ namespace Ubique.Models
 		[Key]
 		public int Id { get; set; }
 
-		[Required(ErrorMessage = "Il campo \"Nome SottoCategoria\" è obbligatorio.")]
-		[MaxLength(30, ErrorMessage = "Il campo \"Nome SottoCategoria\" deve essere al massimo di 30 caratteri.")]
+		[Required(ErrorMessage = "Il campo \"Nome Sotto Categoria\" è obbligatorio.")]
+		[MaxLength(30, ErrorMessage = "Il campo \"Nome Sotto Categoria\" deve essere al massimo di 30 caratteri.")]
 		[DisplayName("Nome SottoCategoria")]
 		public string? Name { get; set; }
 

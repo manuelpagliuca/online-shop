@@ -12,11 +12,9 @@
 </head>
 <body>
 	<header>
-		<!-- Navigation-->
-
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container px-4 px-lg-5">
-				<a class="navbar-brand" asp-controller="Home" asp-action="Index">Ubique</a>
+				<a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">Ubique</a>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 						<li class="nav-item">
@@ -25,15 +23,21 @@
 							</form>
 						</li>
 					</ul>
-
 					<form class="d-flex">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-							<li class="nav-item"><a class="nav-link active" aria-current="page" asp-controller="Category" asp-action="Index">Gestisci Categorie</a></li>
-							<li class="nav-item"><a class="nav-link active" aria-current="page" asp-controller="SubCategory" asp-action="Index">Gestisci SottoCategorie</a></li>
 							<li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Login</a></li>
 							<li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Registrati</a></li>
 						</ul>
 
+						<div class="btn-group me-2">
+							<button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+								Gestisci
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Category" asp-action="Index">Categorie</a></li>
+								<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="SubCategory" asp-action="Index">Sotto Categorie</a></li>
+							</ul>
+						</div>
 						<button class="btn btn-outline-dark" type="submit">
 							<i class="bi bi-cart-fill"></i>
 							Carrello
@@ -43,8 +47,6 @@
 				</div>
 			</div>
 		</nav>
-
-
 
 		<div class="container">
 			<nav class="navbar navbar-expand-lg navbar-light">
@@ -72,9 +74,12 @@
 		<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Ubique 2023</p></div>
 	</footer>
 
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+	<!-- Includi jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- Includi il file JavaScript di Bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

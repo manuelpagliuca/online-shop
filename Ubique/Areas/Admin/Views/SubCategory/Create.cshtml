@@ -3,7 +3,7 @@
 <form method="post">
 	<div class="border p-3 mt-4">
 		<div class="pb-2 row">
-			<h2 class="text-primary">Crea SottoCategoria</h2>
+			<h2 class="text-primary">Crea Sotto Categoria</h2>
 			<hr />
 		</div>
 		<div asp-validation-summary="All"></div>
@@ -11,7 +11,7 @@
 			<label asp-for="SubCategory.CategoryId" class="p-0"></label>
 			<select asp-for="SubCategory.CategoryId" class="form-control">
 				@foreach (var category in Model.Categories)
-				{
+				{ 
 					<option value="@category.Id">@category.Name</option>
 				}
 			</select>
@@ -27,7 +27,7 @@
 				<button type="submit" class="btn btn-primary form-control">Crea</button>
 			</div>
 			<div class="col-6 col-md-3">
-				<a asp-controller="SubCategory" asp-action="Index" class="btn btn-outline-secondary border form-control">Torna alle sottocategorie</a>
+				<a asp-controller="SubCategory" asp-action="Index" class="btn btn-outline-secondary border form-control">Torna alle Sotto Categorie</a>
 			</div>
 		</div>
 	</div>
