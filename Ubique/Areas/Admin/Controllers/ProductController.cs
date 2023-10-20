@@ -18,8 +18,16 @@ namespace Ubique.Areas.Admin.Controllers
 
 		public IActionResult Index()
 		{
-			List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
-			return View(objProductList);
+			List<Product> productList = _unitOfWork.Product.GetAll().ToList();
+
+			foreach (Product product in productList)
+			{
+				SubCategory subCategory = _unitOfWork.SubCategory.Get(u => u.Id == product.SubCategoryId);
+				subCategory.Category = _unitOfWork.Category.Get(u => u.Id == subCategory.CategoryId);
+				product.SubCategory = subCategory;
+			}			
+
+			return View(productList);
 		}
 
 		public IActionResult Create()
@@ -78,7 +86,6 @@ namespace Ubique.Areas.Admin.Controllers
 		[HttpGet]
 		public IActionResult GetSubCategoriesBasedOnCategory(int id)
 		{
-			IEnumerable<SubCategory> all = _unitOfWork.SubCategory.GetAll();
 			IEnumerable<SubCategory> subCategories = _unitOfWork.SubCategory.GetList(u => u.CategoryId == id);
 			IEnumerable<SelectListItem> listItems = subCategories.Select(subCategory => new SelectListItem
 			{

@@ -17,31 +17,37 @@
 					<label asp-for="Product.Name" class="ms-2"></label>
 					<span asp-validation-for="Product.Name" class="text-danger"></span>
 				</div>
+
 				<div class="form-floating py-2 col-12">
 					<input asp-for="Product.Description" class="form-control border-0 shadow" />
 					<label asp-for="Product.Description" class="ms-2"></label>
 					<span asp-validation-for="Product.Description" class="text-danger"></span>
 				</div>
+
 				<div class="form-floating py-2 col-12">
 					<input asp-for="Product.Brand" class="form-control border-0 shadow" />
 					<label asp-for="Product.Brand" class="ms-2"></label>
 					<span asp-validation-for="Product.Brand" class="text-danger"></span>
 				</div>
+
 				<div class="form-floating py-2 col-12">
 					<input asp-for="Product.ListPrice" class="form-control border-0 shadow" />
 					<label asp-for="Product.ListPrice" class="ms-2"></label>
 					<span asp-validation-for="Product.ListPrice" class="text-danger"></span>
 				</div>
+
 				<div class="form-floating py-2 col-12">
 					<input asp-for="Product.Price" class="form-control border-0 shadow" />
 					<label asp-for="Product.Price" class="ms-2"></label>
 					<span asp-validation-for="Product.Price" class="text-danger"></span>
 				</div>
+
 				<div class="form-floating py-2 col-12">
 					<input asp-for="Product.ImageUrl" class="form-control border-0 shadow" />
 					<label asp-for="Product.ImageUrl" class="ms-2">Image URL</label>
 					<span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
 				</div>
+
 				<div class="form-floating py-2 col-12">
 					<select id="categorySelect"
 							asp-for="@Model.Product.SubCategory.CategoryId"
@@ -52,6 +58,7 @@
 					<label asp-for="Product.SubCategory.CategoryId" class="ms-2"></label>
 					<span asp-validation-for="Product.SubCategory.CategoryId" class="text-danger"></span>
 				</div>
+
 				<div class="form-floating py-2 col-12">
 					<select id="subCategorySelect"
 							asp-for="@Model.Product.SubCategory.Id"
@@ -62,6 +69,7 @@
 					<label asp-for="Product.SubCategoryId" class="ms-2"></label>
 					<span asp-validation-for="Product.SubCategoryId" class="text-danger"></span>
 				</div>
+
 				<div class="row pt-2">
 					<div class="col-6 col-md-3">
 						<button type="submit" class="btn btn-primary form-control">Crea</button>
@@ -74,6 +82,7 @@
 						</a>
 					</div>
 				</div>
+
 			</div>
 		</form>
 	</div>
