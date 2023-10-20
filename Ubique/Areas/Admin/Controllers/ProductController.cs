@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
+using Ubique.Models.ViewModels;
 
 namespace Ubique.Areas.Admin.Controllers
 {
@@ -22,21 +24,69 @@ namespace Ubique.Areas.Admin.Controllers
 
 		public IActionResult Create()
 		{
-			return View();
+			ProductVM productVM = new()
+			{
+				CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				}),
+
+				SubCategoryList = _unitOfWork.SubCategory.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				}),
+				Product = new Product()
+			};
+
+			productVM.Product.SubCategory = new SubCategory();
+
+			return View(productVM);
 		}
 
 		[HttpPost]
-		public IActionResult Create(Product obj)
+		public IActionResult Create(ProductVM productVM)
 		{
-			if (ModelState.IsValid)
+			SubCategory subCategory = _unitOfWork.SubCategory.Get(u => u.Id == productVM.Product.SubCategory.Id);
+			Category category = _unitOfWork.Category.Get(u => u.Id == productVM.Product.SubCategory.CategoryId);
+
+			productVM.Product.SubCategory = subCategory;
+			productVM.Product.SubCategory.Category = category;
+
+			if (subCategory != null && category != null)
 			{
-				_unitOfWork.Product.Add(obj);
+				_unitOfWork.Product.Add(productVM.Product);
 				_unitOfWork.Save();
 				TempData["success"] = "Prodotto creato con successo!";
 				return RedirectToAction("Index");
 			}
+			else
+			{
+				ModelState.AddModelError("ProductVM", "Categoria/Sotto Categoria non valida");
 
-			return View();
+				productVM.SubCategoryList = _unitOfWork.SubCategory.GetAll().Select(u => new SelectListItem
+				{
+					Text = u.Name,
+					Value = u.Id.ToString()
+				});
+
+				return View(productVM);
+			}
+		}
+
+		[HttpGet]
+		public IActionResult GetSubCategoriesBasedOnCategory(int id)
+		{
+			IEnumerable<SubCategory> all = _unitOfWork.SubCategory.GetAll();
+			IEnumerable<SubCategory> subCategories = _unitOfWork.SubCategory.GetList(u => u.CategoryId == id);
+			IEnumerable<SelectListItem> listItems = subCategories.Select(subCategory => new SelectListItem
+			{
+				Text = subCategory.Name,
+				Value = subCategory.Id.ToString()
+			});
+
+			return new JsonResult(listItems);
 		}
 
 		public IActionResult Edit(int? id)

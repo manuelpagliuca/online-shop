@@ -17,9 +17,10 @@ namespace Ubique.DataAccess.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Category>().HasData(
-				new Category { Id = 1, Name = "Lavabo", DisplayOrder = 1 },
-				new Category { Id = 2, Name = "Bidet", DisplayOrder = 2 },
-				new Category { Id = 3, Name = "Cascata", DisplayOrder = 3 });
+				new Category { Id = 1, Name = "Rubinetteria Lavabo", DisplayOrder = 1 },
+				new Category { Id = 2, Name = "Rubinetteria Bidet", DisplayOrder = 2 },
+				new Category { Id = 3, Name = "Rubinetteria Cascata", DisplayOrder = 3 },
+				new Category { Id = 10, Name = "Serramenti Casa", DisplayOrder = 4 });
 
 			modelBuilder.Entity<SubCategory>().HasData(
 				new SubCategory { Id = 1, Name = "Monoleva", CategoryId = 1 },
@@ -27,9 +28,39 @@ namespace Ubique.DataAccess.Data
 				new SubCategory { Id = 3, Name = "Termostatico", CategoryId = 3 });
 
 			modelBuilder.Entity<Product>().HasData(
-				new Product { Id = 1, Name = "Turbo Compare v1", Brand = "Paini", Description = "Permette di lavarsi le mani.", ListPrice = 100, Price = 240 },
-				new Product { Id = 2, Name = "Turbo Compare v2", Brand = "Paini", Description = "Permette di lavarsi le mani.", ListPrice = 140, Price = 340 },
-				new Product { Id = 3, Name = "Jars 2", Brand = "NOBILI", Description = "Permette di sporcarsi le mani.", ListPrice = 120, Price = 440 });
+				new Product
+				{
+					Id = 1,
+					Name = "Turbo Compare v1",
+					Brand = "Paini",
+					Description = "Permette di lavarsi le mani.",
+					ListPrice = 100,
+					Price = 240,
+					SubCategoryId = 1,
+					ImageUrl = ""
+				},
+				new Product
+				{
+					Id = 2,
+					Name = "Turbo Compare v2",
+					Brand = "Paini",
+					Description = "Permette di lavarsi le mani.",
+					ListPrice = 140,
+					Price = 340,
+					SubCategoryId = 1,
+					ImageUrl = ""
+				},
+				new Product
+				{
+					Id = 3,
+					Name = "Jars 2",
+					Brand = "NOBILI",
+					Description = "Permette di sporcarsi le mani.",
+					ListPrice = 120,
+					Price = 440,
+					SubCategoryId = 2,
+					ImageUrl = ""
+				});
 		}
 	}
 }

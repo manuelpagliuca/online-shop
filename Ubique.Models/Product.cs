@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ubique.Models
 {
@@ -21,5 +23,13 @@ namespace Ubique.Models
 		[Display(Name = "Prezzo per 1-50")]
 		[Range(1, 2000)]
 		public double Price { get; set; }
+
+		[Required]
+		[Display(Name = "Sotto Categoria")]
+		public int SubCategoryId { get; set; }
+		[ForeignKey("SubCategoryId")]
+		public SubCategory SubCategory { get; set; }
+		public string ImageUrl { get; set; }
+
 	}
 }

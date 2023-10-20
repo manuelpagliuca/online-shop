@@ -28,6 +28,13 @@ namespace Ubique.DataAccess.Repository
 			return query.FirstOrDefault();
 		}
 
+		public IEnumerable<T> GetList(Expression<Func<T, bool>> filter)
+		{
+			IQueryable<T> query = dbSet;
+			query = query.Where(filter);
+			return query.ToList();
+		}
+
 		public IEnumerable<T> GetAll()
 		{
 			IQueryable<T> query = dbSet;
