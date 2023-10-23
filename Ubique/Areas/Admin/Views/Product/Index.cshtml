@@ -13,7 +13,7 @@
 			<div class="col-6">
 			</div>
 			<div class="col-6 text-end">
-				<a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+				<a asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
 					<i class="bi bi-plus-circle"></i> Crea Nuovo Prodotto
 				</a>
 			</div>
@@ -23,7 +23,6 @@
 				<tr>
 					<th>Nome</th>
 					<th>Brand</th>
-					<th>Descrizione</th>
 					<th>Prezzo</th>
 					<th>Categoria</th>
 					<th>Sotto Categoria</th>
@@ -35,20 +34,21 @@
 					<tr>
 						<td>@obj.Name</td>
 						<td>@obj.Brand</td>
-						<td>@obj.Description</td>
 						<td>@obj.Price</td>
 						<td>@obj.SubCategory.Category.Name</td>
 						<td>@obj.SubCategory.Name</td>
 						<td>
 							<div class="w-75 btn-group" role="group">
 								<a asp-controller="Product"
-								   asp-action="Edit"
-								   asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+								   asp-action="Upsert"
+								   asp-route-id="@obj.Id"
+								   class="btn btn-primary mx-2">
 									<i class="bi bi-pencil-square"></i> Modifica
 								</a>
 								<a asp-controller="Product"
 								   asp-action="Delete"
-								   asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+								   asp-route-id="@obj.Id"
+								   class="btn btn-danger mx-2">
 									<i class="bi bi-trash-fill"></i> Rimuovi
 								</a>
 							</div>

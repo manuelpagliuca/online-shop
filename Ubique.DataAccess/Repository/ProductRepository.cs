@@ -15,7 +15,22 @@ namespace Ubique.DataAccess.Repository
 
 		public void Update(Product product)
 		{
-			_db.Products.Update(product);
+			var objFromDb = _db.Products.FirstOrDefault(u => u.Id == product.Id);
+
+			if (objFromDb != null)
+			{
+				objFromDb.Name = product.Name;
+				objFromDb.Brand = product.Brand;
+				objFromDb.Description = product.Description;
+				objFromDb.Price = product.Price;
+				objFromDb.ListPrice = product.ListPrice;
+				objFromDb.SubCategoryId = product.SubCategoryId;
+
+				if (objFromDb.ImageUrl != null)
+				{
+					objFromDb.ImageUrl = objFromDb.ImageUrl;
+				}
+			}
 		}
 	}
 }

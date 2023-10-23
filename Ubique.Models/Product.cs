@@ -9,27 +9,43 @@ namespace Ubique.Models
 		[Key]
 		public int Id { get; set; }
 
-		[Required]
+		[Required(ErrorMessage = "Il campo \"Nome\" è obbligatorio.")]
 		public string Name { get; set; }
+
+		[Required(ErrorMessage = "Il campo \"Description\" è obbligatorio.")]
 		public string Description { get; set; }
+
+		[Required(ErrorMessage = "Il campo \"Brand\" è obbligatorio.")]
 		public string Brand { get; set; }
 
-		[Required]
 		[Display(Name = "Prezzo Lista")]
 		[Range(1, 2000)]
 		public double ListPrice { get; set; }
 
-		[Required]
 		[Display(Name = "Prezzo per 1-50")]
 		[Range(1, 2000)]
 		public double Price { get; set; }
 
-		[Required]
+		[Required(ErrorMessage = "Il campo \"Sotto Categoria\" è obbligatorio.")]
 		[Display(Name = "Sotto Categoria")]
 		public int SubCategoryId { get; set; }
+
 		[ForeignKey("SubCategoryId")]
 		public SubCategory SubCategory { get; set; }
+
+		[Required(ErrorMessage = "Il campo \"Immagine\" è obbligatorio.")]
+		[Display(Name = "Immagine")]
 		public string ImageUrl { get; set; }
 
+		public bool IsValid()
+		{
+			if (string.IsNullOrEmpty(Name)) return false;
+			if (string.IsNullOrEmpty(Description)) return false;
+			if (string.IsNullOrEmpty(Brand)) return false;
+			if (SubCategory.Id == null) return false;
+			if (SubCategory.CategoryId == null) return false;
+
+			return true;
+		}
 	}
 }

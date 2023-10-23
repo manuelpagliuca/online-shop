@@ -9,6 +9,6 @@ namespace Ubique.Models.ViewModels
 		[ValidateNever]
 		public IEnumerable<SelectListItem> CategoryList { get; set; }
 		[ValidateNever]
-		public IEnumerable<SelectListItem> SubCategoryList { get; set; }
+		public IEnumerable<SelectListItem> SubCategoryList { get; set; } // Pre-Loading SubCategories List in `Edit`
 	}
 }
