@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
 using Ubique.Models.ViewModels;
@@ -22,13 +20,11 @@ namespace Ubique.Areas.Admin.Controllers
 
 		public IActionResult Index()
 		{
-			List<Product> productList = _unitOfWork.Product.GetAll().ToList();
+			List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory").ToList();
 
 			foreach (Product product in productList)
 			{
-				SubCategory subCategory = _unitOfWork.SubCategory.Get(u => u.Id == product.SubCategoryId);
-				subCategory.Category = _unitOfWork.Category.Get(u => u.Id == subCategory.CategoryId);
-				product.SubCategory = subCategory;
+				product.SubCategory.Category = _unitOfWork.Category.Get(u => u.Id == product.SubCategory.CategoryId);
 			}
 
 			return View(productList);
@@ -77,9 +73,7 @@ namespace Ubique.Areas.Admin.Controllers
 		[HttpPost]
 		public IActionResult Upsert(ProductVM productVM, IFormFile? file)
 		{
-			bool newProductHasImage = productVM.Product.Id == 0 && file != null;
-
-			if (productVM.Product.IsValid() && newProductHasImage)
+			if (productVM.Product.IsValid()) // TODO: ModelState.IsValid is a better option
 			{
 				string wwwRootPath = _webHostEnvironment.WebRootPath;
 

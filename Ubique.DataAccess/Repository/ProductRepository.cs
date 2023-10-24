@@ -28,7 +28,7 @@ namespace Ubique.DataAccess.Repository
 
 				if (objFromDb.ImageUrl != null)
 				{
-					objFromDb.ImageUrl = objFromDb.ImageUrl;
+					objFromDb.ImageUrl = product.ImageUrl;
 				}
 			}
 		}
