@@ -220,5 +220,22 @@ namespace Ubique.Areas.Admin.Controllers
 			TempData["success"] = "Prodotto rimosso con successo!";
 			return RedirectToAction("Index");
 		}
+
+		#region API CALLS
+
+		[HttpGet]
+		public IActionResult GetAll()
+		{
+			List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory").ToList();
+
+			foreach (Product product in productList)
+			{
+				product.SubCategory.Category = _unitOfWork.Category.Get(u => u.Id == product.SubCategory.CategoryId);
+			}
+
+			return Json(new { data = productList });
+		}
+
+		#endregion
 	}
 }
