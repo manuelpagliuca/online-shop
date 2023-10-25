@@ -20,12 +20,7 @@ namespace Ubique.Areas.Admin.Controllers
 
 		public IActionResult Index()
 		{
-			List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory").ToList();
-
-			foreach (Product product in productList)
-			{
-				product.SubCategory.Category = _unitOfWork.Category.Get(u => u.Id == product.SubCategory.CategoryId);
-			}
+			List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory.Category").ToList();
 
 			return View(productList);
 		}
@@ -193,12 +188,7 @@ namespace Ubique.Areas.Admin.Controllers
 		[HttpGet]
 		public IActionResult GetAll()
 		{
-			List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory").ToList();
-
-			foreach (Product product in productList)
-			{
-				product.SubCategory.Category = _unitOfWork.Category.Get(u => u.Id == product.SubCategory.CategoryId);
-			}
+			List<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory.Category").ToList();
 
 			return Json(new { data = productList });
 		}
