@@ -102,9 +102,9 @@ namespace Ubique.DataAccess.Migrations
                 columns: new[] { "Id", "Brand", "Description", "ImageUrl", "ListPrice", "Name", "Price", "SubCategoryId" },
                 values: new object[,]
                 {
-                    { 1, "Paini", "Permette di lavarsi le mani.", "/images/product/b7266cec-65ea-47ae-8011-361559e03bbb.jpg", 100.0, "Turbo Compare v1", 240.0, 2 },
-                    { 2, "Paini", "Permette di lavarsi le mani.", "/images/product/cbb0ed0f-6d37-4480-baaa-9ad4c6a7724f.jpg", 140.0, "Turbo Compare v2", 340.0, 2 },
-                    { 3, "NOBILI", "Permette di sporcarsi le mani.", "/images/product/d12ad88d-0a26-4610-a6ed-c603728518fe.png", 120.0, "Jars 2", 440.0, 3 }
+                    { 1, "Paini", "Permette di lavarsi le mani.", "\\images\\product\\b7266cec-65ea-47ae-8011-361559e03bbb.jpg", 100.0, "Turbo Compare v1", 240.0, 2 },
+                    { 2, "Paini", "Permette di lavarsi le mani.", "\\images\\product\\cbb0ed0f-6d37-4480-baaa-9ad4c6a7724f.jpg", 140.0, "Turbo Compare v2", 340.0, 2 },
+                    { 3, "NOBILI", "Permette di sporcarsi le mani.", "\\images\\product\\d12ad88d-0a26-4610-a6ed-c603728518fe.png", 120.0, "Jars 2", 440.0, 3 }
                 });
 
             migrationBuilder.CreateIndex(

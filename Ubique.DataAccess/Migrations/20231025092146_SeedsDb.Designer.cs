@@ -11,7 +11,7 @@ using Ubique.DataAccess.Data;
 namespace Ubique.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231023095354_SeedsDb")]
+    [Migration("20231025092146_SeedsDb")]
     partial class SeedsDb
     {
         /// <inheritdoc />
@@ -116,7 +116,7 @@ namespace Ubique.DataAccess.Migrations
                             Id = 1,
                             Brand = "Paini",
                             Description = "Permette di lavarsi le mani.",
-                            ImageUrl = "/images/product/b7266cec-65ea-47ae-8011-361559e03bbb.jpg",
+                            ImageUrl = "\\images\\product\\b7266cec-65ea-47ae-8011-361559e03bbb.jpg",
                             ListPrice = 100.0,
                             Name = "Turbo Compare v1",
                             Price = 240.0,
@@ -127,7 +127,7 @@ namespace Ubique.DataAccess.Migrations
                             Id = 2,
                             Brand = "Paini",
                             Description = "Permette di lavarsi le mani.",
-                            ImageUrl = "/images/product/cbb0ed0f-6d37-4480-baaa-9ad4c6a7724f.jpg",
+                            ImageUrl = "\\images\\product\\cbb0ed0f-6d37-4480-baaa-9ad4c6a7724f.jpg",
                             ListPrice = 140.0,
                             Name = "Turbo Compare v2",
                             Price = 340.0,
@@ -138,7 +138,7 @@ namespace Ubique.DataAccess.Migrations
                             Id = 3,
                             Brand = "NOBILI",
                             Description = "Permette di sporcarsi le mani.",
-                            ImageUrl = "/images/product/d12ad88d-0a26-4610-a6ed-c603728518fe.png",
+                            ImageUrl = "\\images\\product\\d12ad88d-0a26-4610-a6ed-c603728518fe.png",
                             ListPrice = 120.0,
                             Name = "Jars 2",
                             Price = 440.0,
