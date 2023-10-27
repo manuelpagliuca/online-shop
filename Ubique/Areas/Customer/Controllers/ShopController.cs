@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
 
@@ -40,6 +42,38 @@ namespace Ubique.Areas.Customer.Controllers
 			};
 
 			return View(cart);
+		}
+
+		[HttpPost]
+		[Authorize]
+		public IActionResult Details(ShoppingCart shoppingCart)
+		{
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+			shoppingCart.ApplicationUserId = userId;
+
+			ShoppingCart cartFromDb =
+				_unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
+
+			// avoid shopping cart duplication
+			if (cartFromDb != null)
+			{
+				// shopping cart exists
+				cartFromDb.Count += shoppingCart.Count;
+				_unitOfWork.ShoppingCart.Update(cartFromDb);
+			}
+			else
+			{
+				// add cart record
+				_unitOfWork.ShoppingCart.Add(shoppingCart);
+			}
+
+			_unitOfWork.Save();
+
+			Product product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId, includeProperties: "SubCategory.Category");
+			string productCategoryFilter = product.SubCategory.Category.Name.Split(" ")[0];
+
+			return RedirectToAction("Index", new { categoryFilter = productCategoryFilter });
 		}
 	}
 }
