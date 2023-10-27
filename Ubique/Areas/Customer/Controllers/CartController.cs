@@ -32,11 +32,16 @@ namespace Ubique.Areas.Customer.Controllers
 			foreach (var cart in ShoppingCartVM.ShoppingCartList)
 			{
 				double price = GetPriceBasedOnQuantity(cart); // if the price change given the item count
-				cart.Price = price; 
+				cart.Price = price;
 				ShoppingCartVM.OrderTotal += (price * cart.Count);
 			}
 
 			return View(ShoppingCartVM);
+		}
+
+		public IActionResult Summary()
+		{
+			return View();
 		}
 
 		public IActionResult Plus(int cartId)
