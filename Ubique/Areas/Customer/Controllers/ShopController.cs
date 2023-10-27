@@ -68,6 +68,8 @@ namespace Ubique.Areas.Customer.Controllers
 				_unitOfWork.ShoppingCart.Add(shoppingCart);
 			}
 
+			TempData["success"] = "Cart updated successfully";
+
 			_unitOfWork.Save();
 
 			Product product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId, includeProperties: "SubCategory.Category");
