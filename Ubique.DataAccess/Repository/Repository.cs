@@ -24,7 +24,7 @@ namespace Ubique.DataAccess.Repository
 			dbSet.Add(entity);
 		}
 
-		public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked)
+		public T Get(Expression<Func<T, bool>> filter, bool tracked = false, string? includeProperties = null)
 		{
 			IQueryable<T> query;
 
