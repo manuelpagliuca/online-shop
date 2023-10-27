@@ -26,14 +26,15 @@ namespace Ubique.Areas.Customer.Controllers
 			ShoppingCartVM = new()
 			{
 				ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
-				includeProperties: "Product")
+				includeProperties: "Product"),
+				OrderHeader = new()
 			};
 
 			foreach (var cart in ShoppingCartVM.ShoppingCartList)
 			{
 				double price = GetPriceBasedOnQuantity(cart); // if the price change given the item count
 				cart.Price = price;
-				ShoppingCartVM.OrderTotal += (price * cart.Count);
+				ShoppingCartVM.OrderHeader.OrderTotal += (price * cart.Count);
 			}
 
 			return View(ShoppingCartVM);
