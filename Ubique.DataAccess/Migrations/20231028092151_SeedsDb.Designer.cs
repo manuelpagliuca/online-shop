@@ -12,7 +12,7 @@ using Ubique.DataAccess.Data;
 namespace Ubique.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231028083435_SeedsDb")]
+    [Migration("20231028092151_SeedsDb")]
     partial class SeedsDb
     {
         /// <inheritdoc />
@@ -421,6 +421,9 @@ namespace Ubique.DataAccess.Migrations
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ShippingDate")
