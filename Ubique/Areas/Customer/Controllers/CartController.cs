@@ -28,8 +28,7 @@ namespace Ubique.Areas.Customer.Controllers
 
 			ShoppingCartVM = new()
 			{
-				ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
-				includeProperties: "Product"),
+				ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includeProperties: "Product"),
 				OrderHeader = new()
 			};
 
