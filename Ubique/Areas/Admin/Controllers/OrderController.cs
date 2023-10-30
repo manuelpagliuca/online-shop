@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
+using Ubique.Models.ViewModels;
 using Ubique.Utility;
 
 namespace Ubique.Areas.Admin.Controllers
@@ -20,6 +21,18 @@ namespace Ubique.Areas.Admin.Controllers
 		{
 			return View();
 		}
+
+		public IActionResult Details(int orderId)
+		{
+			OrderVM orderVM = new()
+			{
+				OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
+				OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
+			};
+
+			return View(orderVM);
+		}
+
 
 		#region API CALLS
 
