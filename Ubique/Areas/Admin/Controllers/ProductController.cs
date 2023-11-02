@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
 using Ubique.Models.ViewModels;
+using Ubique.Utility;
 
 namespace Ubique.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	//[Authorize(Roles = StaticDetails.Role_Admin)]
+	[Authorize(Roles = StaticDetails.Role_Admin)]
 	public class ProductController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;

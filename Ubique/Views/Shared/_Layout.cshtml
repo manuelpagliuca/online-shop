@@ -28,20 +28,20 @@
 						<a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Ordini</a>
 					}
 					<form class="d-flex">
-						@* 						@if (User.IsInRole(StaticDetails.Role_Admin))
-						{ *@
-						<div class="btn-group me-2">
-							<button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-								Gestisci
-							</button>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Category" asp-action="Index">Categorie</a></li>
-								<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="SubCategory" asp-action="Index">Sotto Categorie</a></li>
-								<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Product" asp-action="Index">Prodotti</a></li>
-								<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Company" asp-action="Index">Compagnie</a></li>
-							</ul>
-						</div>
-						@* } *@
+						@if (User.IsInRole(StaticDetails.Role_Admin))
+						{
+							<div class="btn-group me-2">
+								<button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+									Gestisci
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Category" asp-action="Index">Categorie</a></li>
+									<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="SubCategory" asp-action="Index">Sotto Categorie</a></li>
+									<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Product" asp-action="Index">Prodotti</a></li>
+									<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Company" asp-action="Index">Compagnie</a></li>
+								</ul>
+							</div>
+						}
 
 						<button class="btn btn-outline-dark" asp-controller="Cart" asp-area="Customer" asp-action="Index">
 							<i class="bi bi-cart-fill"></i>
