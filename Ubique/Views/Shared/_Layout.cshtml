@@ -45,23 +45,9 @@
 								</ul>
 							</div>
 						}
-
-						@if (HttpContextAccessor.HttpContext.Session.GetInt32(StaticDetails.SessionCart) != null)
-						{
-							<button class="btn btn-outline-dark" asp-controller="Cart" asp-area="Customer" asp-action="Index">
-								<i class="bi bi-cart-fill"></i>
-								Carrello
-								(@HttpContextAccessor.HttpContext.Session.GetInt32(StaticDetails.SessionCart))
-							</button>
-						}
-						else
-						{
-							<button class="btn btn-outline-dark" asp-controller="Cart" asp-area="Customer" asp-action="Index">
-								<i class="bi bi-cart-fill"></i>
-								Carrello
-								(0)
-							</button>
-						}
+					<button class="btn btn-outline-dark" asp-controller="Cart" asp-area="Customer" asp-action="Index">
+						@await Component.InvokeAsync("ShoppingCart");
+					</button>
 					</form>
 					<partial name="_LoginPartial" />
 				</div>
