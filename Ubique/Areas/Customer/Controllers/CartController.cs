@@ -95,7 +95,7 @@ namespace Ubique.Areas.Customer.Controllers
 			{
 				// it is a regular customer account and we need to capture payment
 				// stripe logic
-				string? domain = "https://localhost:7029/";
+				string? domain = Request.Scheme + "://" + Request.Host.Value + "/";
 
 				SessionCreateOptions? options = new SessionCreateOptions
 				{
