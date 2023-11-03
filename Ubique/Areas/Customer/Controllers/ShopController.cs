@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
+using Ubique.Utility;
 
 namespace Ubique.Areas.Customer.Controllers
 {
@@ -23,6 +24,15 @@ namespace Ubique.Areas.Customer.Controllers
 			if (categoryFilter == null)
 			{
 				return View("Page404");
+			}
+
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+			if (claim != null)
+			{
+				HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCart
+					.GetAll(u => u.ApplicationUserId == claim.Value).Count());
 			}
 
 			IEnumerable<Product> productList =
@@ -58,19 +68,20 @@ namespace Ubique.Areas.Customer.Controllers
 			// avoid shopping cart duplication
 			if (cartFromDb != null)
 			{
-				// shopping cart exists
+				//shopping cart exists
 				cartFromDb.Count += shoppingCart.Count;
 				_unitOfWork.ShoppingCart.Update(cartFromDb);
+				_unitOfWork.Save();
 			}
 			else
 			{
-				// add cart record
+				//add cart record
 				_unitOfWork.ShoppingCart.Add(shoppingCart);
+				_unitOfWork.Save();
+				HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
 			}
 
 			TempData["success"] = "Cart updated successfully";
-
-			_unitOfWork.Save();
 
 			Product product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId, includeProperties: "SubCategory.Category");
 			string productCategoryFilter = product.SubCategory.Category.Name.Split(" ")[0];
