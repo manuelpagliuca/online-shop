@@ -42,12 +42,14 @@
 									<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="SubCategory" asp-action="Index">Sotto Categorie</a></li>
 									<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Product" asp-action="Index">Prodotti</a></li>
 									<li><a class="dropdown-item" aria-current="page" asp-area="Admin" asp-controller="Company" asp-action="Index">Compagnie</a></li>
+									<li><hr class="dropdown-divider"/></li>
+									<li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Crea utente</a></li>
 								</ul>
 							</div>
 						}
-					<button class="btn btn-outline-dark" asp-controller="Cart" asp-area="Customer" asp-action="Index">
-						@await Component.InvokeAsync("ShoppingCart")
-					</button>
+						<button class="btn btn-outline-dark" asp-controller="Cart" asp-area="Customer" asp-action="Index">
+							@await Component.InvokeAsync("ShoppingCart")
+						</button>
 					</form>
 					<partial name="_LoginPartial" />
 				</div>

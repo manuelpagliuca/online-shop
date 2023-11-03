@@ -204,8 +204,15 @@ namespace Ubique.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+						if (User.IsInRole(StaticDetails.Role_Admin))
+						{
+							TempData["success"] = "Nuovo Utente Creato!";
+						}
+						else
+						{
+							await _signInManager.SignInAsync(user, isPersistent: false);
+						}
+						return LocalRedirect(returnUrl);
                     }
                 }
 

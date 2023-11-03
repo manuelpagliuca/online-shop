@@ -153,6 +153,8 @@ namespace Ubique.Areas.Customer.Controllers
 					_unitOfWork.OrderHeader.UpdateStatus(id, StaticDetails.StatusApproved, StaticDetails.PaymentStatusApproved);
 					_unitOfWork.Save();
 				}
+
+				HttpContext.Session.Clear();
 			}
 
 			List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
@@ -185,7 +187,7 @@ namespace Ubique.Areas.Customer.Controllers
 			foreach (ShoppingCart? cart in ShoppingCartVM.ShoppingCartList)
 			{
 				cart.Price = GetPriceBasedOnQuantity(cart);
-				ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+				ShoppingCartVM.OrderHeader.OrderTotal += cart.Price * cart.Count;
 			}
 
 			return View(ShoppingCartVM);
