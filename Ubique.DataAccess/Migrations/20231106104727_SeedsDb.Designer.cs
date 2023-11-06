@@ -12,7 +12,7 @@ using Ubique.DataAccess.Data;
 namespace Ubique.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231028092151_SeedsDb")]
+    [Migration("20231106104727_SeedsDb")]
     partial class SeedsDb
     {
         /// <inheritdoc />
@@ -624,7 +624,6 @@ namespace Ubique.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CompanyId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -771,9 +770,7 @@ namespace Ubique.DataAccess.Migrations
                 {
                     b.HasOne("Ubique.Models.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
                 });

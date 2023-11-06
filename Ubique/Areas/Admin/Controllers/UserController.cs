@@ -37,7 +37,7 @@ namespace Ubique.Areas.Admin.Controllers
 			foreach (var user in userList)
 			{
 				var roleId = userRole.FirstOrDefault(u => u.UserId == user.Id).RoleId;
-				var role = roles.FirstOrDefault(u => u.Id == roleId).Name;
+				user.Role = roles.FirstOrDefault(u => u.Id == roleId).Name;
 
 				if (user.Company == null)
 				{
@@ -49,12 +49,29 @@ namespace Ubique.Areas.Admin.Controllers
 			return Json(new { data = userList });
 		}
 
-		[HttpDelete]
-		public IActionResult Delete(int? id)
+		[HttpPost]
+		public IActionResult LockUnlock([FromBody] string? id)
 		{
+			var fromDb = _db.ApplicationUsers.FirstOrDefault(u => u.Id == id);
 
+			if (fromDb == null)
+			{
+				return Json(new { success = false, message = "Error while Locking/Unlocking" });
+			}
 
-			return Json(new { success = true, message = "Delete Successful" });
+			if (fromDb.LockoutEnd != null && fromDb.LockoutEnd > DateTime.Now)
+			{
+				// user is currently locked and it needs to be unlocked
+				fromDb.LockoutEnd = DateTime.Now;
+			}
+			else
+			{
+				fromDb.LockoutEnd = DateTime.Now.AddYears(1000);
+			}
+
+			_db.SaveChanges();
+
+			return Json(new { success = true, message = "Operazione Compiuta" });
 		}
 
 		#endregion
