@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ubique.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using Ubique.DataAccess.Data;
 namespace Ubique.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231107073137_RemoveImageUrl")]
+    partial class RemoveImageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -512,28 +515,6 @@ namespace Ubique.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Ubique.Models.ProductImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages");
-                });
-
             modelBuilder.Entity("Ubique.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -748,15 +729,6 @@ namespace Ubique.DataAccess.Migrations
                     b.Navigation("SubCategory");
                 });
 
-            modelBuilder.Entity("Ubique.Models.ProductImage", b =>
-                {
-                    b.HasOne("Ubique.Models.Product", null)
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Ubique.Models.ShoppingCart", b =>
                 {
                     b.HasOne("Ubique.Models.ApplicationUser", "ApplicationUser")
@@ -794,11 +766,6 @@ namespace Ubique.DataAccess.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("Ubique.Models.Product", b =>
-                {
-                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }

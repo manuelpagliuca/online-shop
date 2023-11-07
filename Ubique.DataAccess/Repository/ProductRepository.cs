@@ -25,11 +25,11 @@ namespace Ubique.DataAccess.Repository
 				objFromDb.Price = product.Price;
 				objFromDb.ListPrice = product.ListPrice;
 				objFromDb.SubCategoryId = product.SubCategoryId;
-
-				if (objFromDb.ImageUrl != null)
-				{
-					objFromDb.ImageUrl = product.ImageUrl;
-				}
+				objFromDb.ProductImages = product.ProductImages;
+				//if (objFromDb.ImageUrl != null)
+				//{
+				//	objFromDb.ImageUrl = product.ImageUrl;
+				//}
 			}
 		}
 	}

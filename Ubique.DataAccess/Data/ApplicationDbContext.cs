@@ -18,6 +18,7 @@ namespace Ubique.DataAccess.Data
         public DbSet<Company> Companies { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 		public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 		public DbSet<OrderHeader> OrderHeaders { get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
 
@@ -83,7 +84,7 @@ namespace Ubique.DataAccess.Data
                     ListPrice = 100,
                     Price = 240,
                     SubCategoryId = 2,
-                    ImageUrl = "\\images\\product\\b7266cec-65ea-47ae-8011-361559e03bbb.jpg"
+                    //ImageUrl = "\\images\\product\\b7266cec-65ea-47ae-8011-361559e03bbb.jpg"
                 },
                 new Product
                 {
@@ -94,7 +95,7 @@ namespace Ubique.DataAccess.Data
                     ListPrice = 140,
                     Price = 340,
                     SubCategoryId = 2,
-                    ImageUrl = "\\images\\product\\cbb0ed0f-6d37-4480-baaa-9ad4c6a7724f.jpg"
+                    //ImageUrl = "\\images\\product\\cbb0ed0f-6d37-4480-baaa-9ad4c6a7724f.jpg"
                 },
                 new Product
                 {
@@ -105,7 +106,7 @@ namespace Ubique.DataAccess.Data
                     ListPrice = 120,
                     Price = 440,
                     SubCategoryId = 3,
-                    ImageUrl = "\\images\\product\\d12ad88d-0a26-4610-a6ed-c603728518fe.png"
+                    //ImageUrl = "\\images\\product\\d12ad88d-0a26-4610-a6ed-c603728518fe.png"
                 });
         }
     }

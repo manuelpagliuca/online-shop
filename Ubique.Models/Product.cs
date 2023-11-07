@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -33,9 +34,12 @@ namespace Ubique.Models
 		[ForeignKey("SubCategoryId")]
 		public SubCategory SubCategory { get; set; }
 
-		[Required(ErrorMessage = "Il campo \"Immagine\" è obbligatorio.")]
-		[Display(Name = "Immagine")]
-		public string ImageUrl { get; set; }
+		[ValidateNever]
+		public List<ProductImage> ProductImages { get; set; }
+
+		//[Required(ErrorMessage = "Il campo \"Immagine\" è obbligatorio.")]
+		//[Display(Name = "Immagine")]
+		//public string ImageUrl { get; set; }
 
 		public bool IsValid()
 		{
