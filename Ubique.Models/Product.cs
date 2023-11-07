@@ -46,8 +46,7 @@ namespace Ubique.Models
 			if (string.IsNullOrEmpty(Name)) return false;
 			if (string.IsNullOrEmpty(Description)) return false;
 			if (string.IsNullOrEmpty(Brand)) return false;
-			if (SubCategory.Id == null) return false;
-			if (SubCategory.CategoryId == null) return false;
+			if (SubCategoryId == null) return false;
 
 			return true;
 		}

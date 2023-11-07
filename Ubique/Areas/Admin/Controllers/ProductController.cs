@@ -75,12 +75,7 @@ namespace Ubique.Areas.Admin.Controllers
 			{
 				if (productVM.Product.Id == 0)
 				{
-					productVM.Product.SubCategory = _unitOfWork.SubCategory.Get(u => u.Id == productVM.Product.SubCategoryId);
-					productVM.Product.SubCategory.Category = _unitOfWork.Category.Get(u => u.Id == productVM.Product.SubCategory.CategoryId);
-				}
-
-				if (productVM.Product.Id == 0)
-				{
+					//productVM.Product.SubCategory = _unitOfWork.SubCategory.Get(u => u.Id == productVM.Product.SubCategoryId, includeProperties: "Category");
 					_unitOfWork.Product.Add(productVM.Product);
 				}
 				else
@@ -97,7 +92,7 @@ namespace Ubique.Areas.Admin.Controllers
 					foreach (IFormFile file in files)
 					{
 						string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-						string productPath = Path.Combine(wwwRootPath, @"images\products\product-" + productVM.Product.Id);
+						string productPath = @"images\products\product-" + productVM.Product.Id;
 						string finalPath = Path.Combine(wwwRootPath, productPath);
 
 						if (!Directory.Exists(finalPath))
@@ -105,7 +100,7 @@ namespace Ubique.Areas.Admin.Controllers
 							Directory.CreateDirectory(finalPath);
 						}
 
-						using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+						using (var fileStream = new FileStream(Path.Combine(finalPath, fileName), FileMode.Create))
 						{
 							file.CopyTo(fileStream);
 						}
@@ -172,6 +167,32 @@ namespace Ubique.Areas.Admin.Controllers
 
 				return View(productVM);
 			}
+		}
+
+		public IActionResult DeleteImage(int imageId)
+		{
+			var imageToBeDeleted = _unitOfWork.ProductImage.Get(u => u.Id == imageId);
+			int productId = imageToBeDeleted.ProductId;
+
+			if (imageToBeDeleted != null)
+			{
+				if (!string.IsNullOrEmpty(imageToBeDeleted.ImageUrl))
+				{
+					var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, imageToBeDeleted.ImageUrl.TrimStart('\\'));
+
+					if (!string.IsNullOrEmpty(oldImagePath) && System.IO.File.Exists(oldImagePath))
+					{
+						System.IO.File.Delete(oldImagePath);
+					}
+				}
+
+				_unitOfWork.ProductImage.Remove(imageToBeDeleted);
+				_unitOfWork.Save();
+
+				TempData["success"] = "Immagine rimossa con successo.";
+			}
+
+			return RedirectToAction(nameof(Upsert), new { id = productId });
 		}
 
 		[HttpGet]
@@ -250,7 +271,6 @@ namespace Ubique.Areas.Admin.Controllers
 
 			return Json(new { success = true, message = "Delete Successful" });
 		}
-
 		#endregion
 	}
 }

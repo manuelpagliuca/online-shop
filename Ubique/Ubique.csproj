@@ -27,8 +27,4 @@
     <ProjectReference Include="..\Ubique.Utility\Ubique.Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\product\" />
-  </ItemGroup>
-
 </Project>
