@@ -31,12 +31,12 @@ namespace Ubique.Areas.Customer.Controllers
 
 			if (claim != null)
 			{
-				HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCart
-					.GetAll(u => u.ApplicationUserId == claim.Value).Count());
+				HttpContext.Session.SetInt32(
+					StaticDetails.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value
+				).Count());
 			}
 
-			IEnumerable<Product> productList =
-				_unitOfWork.Product.GetAll(includeProperties: "SubCategory.Category")
+			IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory,SubCategory.Category,ProductImages")
 				.Where(u => u.SubCategory.Category.Name.Contains(categoryFilter));
 
 			return View(productList);
@@ -46,7 +46,7 @@ namespace Ubique.Areas.Customer.Controllers
 		{
 			ShoppingCart cart = new()
 			{
-				Product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "SubCategory.Category"),
+				Product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "SubCategory,SubCategory.Category,ProductImages"),
 				Count = 1,
 				ProductId = productId
 			};

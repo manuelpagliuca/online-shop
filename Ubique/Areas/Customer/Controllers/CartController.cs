@@ -32,11 +32,13 @@ namespace Ubique.Areas.Customer.Controllers
 				OrderHeader = new()
 			};
 
+			IEnumerable<ProductImage> productImages = _unitOfWork.ProductImage.GetAll();
+
 			foreach (var cart in ShoppingCartVM.ShoppingCartList)
 			{
-				double price = GetPriceBasedOnQuantity(cart); // if the price change given the item count
-				cart.Price = price;
-				ShoppingCartVM.OrderHeader.OrderTotal += (price * cart.Count);
+				cart.Product.ProductImages = productImages.Where(u => u.ProductId == cart.Product.Id).ToList();
+				cart.Price = GetPriceBasedOnQuantity(cart); // if the price change given the item count
+				ShoppingCartVM.OrderHeader.OrderTotal += cart.Price * cart.Count;
 			}
 
 			return View(ShoppingCartVM);

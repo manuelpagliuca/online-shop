@@ -26,10 +26,6 @@ namespace Ubique.DataAccess.Repository
 				objFromDb.ListPrice = product.ListPrice;
 				objFromDb.SubCategoryId = product.SubCategoryId;
 				objFromDb.ProductImages = product.ProductImages;
-				//if (objFromDb.ImageUrl != null)
-				//{
-				//	objFromDb.ImageUrl = product.ImageUrl;
-				//}
 			}
 		}
 	}
