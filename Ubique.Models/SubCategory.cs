@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,6 +20,7 @@ namespace Ubique.Models
 		public int CategoryId { get; set; }
 
 		[ForeignKey("CategoryId")]
+		[ValidateNever]
 		public Category? Category { get; set; }
 	}
 }

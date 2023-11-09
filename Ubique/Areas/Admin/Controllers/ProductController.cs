@@ -122,7 +122,7 @@ namespace Ubique.Areas.Admin.Controllers
 					_unitOfWork.Save();
 				}
 
-				TempData["success"] = "Prodotto creato con successo!";
+				TempData["success"] = productVM.Product.Name + " è un nuovo Prodotto.";
 
 				return RedirectToAction("Index");
 			}
@@ -170,7 +170,7 @@ namespace Ubique.Areas.Admin.Controllers
 				_unitOfWork.ProductImage.Remove(imageToBeDeleted);
 				_unitOfWork.Save();
 
-				TempData["success"] = "Immagine rimossa con successo.";
+				TempData["success"] = "Immagine rimossa.";
 			}
 
 			return RedirectToAction(nameof(Upsert), new { id = productId });
@@ -207,13 +207,13 @@ namespace Ubique.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Edit(Product obj)
+		public IActionResult Edit(Product product)
 		{
 			if (ModelState.IsValid)
 			{
-				_unitOfWork.Product.Update(obj);
+				_unitOfWork.Product.Update(product);
 				_unitOfWork.Save();
-				TempData["success"] = "Prodotto aggiornato con successo!";
+				TempData["success"] = product.Name + " è stato aggiornato.";
 				return RedirectToAction("Index");
 			}
 
@@ -237,7 +237,7 @@ namespace Ubique.Areas.Admin.Controllers
 
 			if (productToBeDeleted == null)
 			{
-				return Json(new { success = false, message = "Error while deleting" });
+				return Json(new { success = false, message = "Errore durante la rimozione." });
 			}
 
 			string productPath = @"images\products\product-" + id;
@@ -251,14 +251,14 @@ namespace Ubique.Areas.Admin.Controllers
 				{
 					System.IO.File.Delete(filePath);
 				}
-				
+
 				Directory.Delete(finalPath);
 			}
 
 			_unitOfWork.Product.Remove(productToBeDeleted);
 			_unitOfWork.Save();
 
-			return Json(new { success = true, message = "Delete Successful" });
+			return Json(new { success = true, message = productToBeDeleted.Name + " è stato cancellato." });
 		}
 		#endregion
 	}

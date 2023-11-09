@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Ubique.DataAccess.Data;
 using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
 using Ubique.Models.ViewModels;
@@ -91,6 +89,8 @@ namespace Ubique.Areas.Admin.Controllers
 				}
 			}
 
+			TempData["success"] = "Utente aggiornato.";
+
 			return RedirectToAction("Index");
 		}
 
@@ -120,7 +120,7 @@ namespace Ubique.Areas.Admin.Controllers
 
 			if (fromDb == null)
 			{
-				return Json(new { success = false, message = "Error while Locking/Unlocking" });
+				return Json(new { success = false, message = "Errore durante il Locking/Unlocking." });
 			}
 
 			if (fromDb.LockoutEnd != null && fromDb.LockoutEnd > DateTime.Now)

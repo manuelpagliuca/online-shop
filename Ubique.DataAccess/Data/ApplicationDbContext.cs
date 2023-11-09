@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Ubique.Models;
 
-namespace Ubique.DataAccess.Data
+namespace Ubique.DataAccess.Datza
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {

@@ -49,7 +49,7 @@ namespace Ubique.Areas.Admin.Controllers
 			_unitOfWork.OrderHeader.UpdateStatus(OrderVM.OrderHeader.Id, StaticDetails.StatusInProcess);
 			_unitOfWork.Save();
 
-			TempData["Success"] = "Order Details Updated Successfully.";
+			TempData["Success"] = "Dettegli dell'ordine aggiornati.";
 
 			return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
 		}
@@ -72,7 +72,7 @@ namespace Ubique.Areas.Admin.Controllers
 			_unitOfWork.OrderHeader.Update(orderHeader);
 			_unitOfWork.Save();
 
-			TempData["Success"] = "Order Shipped Successfully.";
+			TempData["Success"] = "Ordine spedito.";
 
 			return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
 		}
@@ -102,7 +102,7 @@ namespace Ubique.Areas.Admin.Controllers
 			}
 
 			_unitOfWork.Save();
-			TempData["success"] = "Ordine cancellato con successo.";
+			TempData["success"] = "Ordine cancellato.";
 
 			return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
 		}
@@ -170,7 +170,7 @@ namespace Ubique.Areas.Admin.Controllers
 			_unitOfWork.OrderHeader.Update(orderHeaderFromDb);
 			_unitOfWork.Save();
 
-			TempData["Success"] = "Order Details Updated Successfully.";
+			TempData["Success"] = "Dettagli dell'ordine aggiornati.";
 
 			return RedirectToAction(nameof(Details), new { orderId = orderHeaderFromDb.Id });
 		}

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Ubique.DataAccess.Data;
+using Ubique.DataAccess.Datza;
 using Ubique.Models;
 using Ubique.Utility;
 

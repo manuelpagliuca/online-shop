@@ -1,4 +1,4 @@
-﻿using Ubique.DataAccess.Data;
+﻿using Ubique.DataAccess.Datza;
 using Ubique.DataAccess.Repository.IRepository;
 using Ubique.Models;
 

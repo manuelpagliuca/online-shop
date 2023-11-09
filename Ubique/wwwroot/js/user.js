@@ -43,8 +43,6 @@ function loadDataTable() {
                         </div>
                     `
                     }
-
-
                 },
                 "width": "25%"
             }

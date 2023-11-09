@@ -62,8 +62,7 @@ namespace Ubique.Areas.Customer.Controllers
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 			shoppingCart.ApplicationUserId = userId;
 
-			ShoppingCart cartFromDb =
-				_unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
+			ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
 
 			// avoid shopping cart duplication
 			if (cartFromDb != null)
@@ -81,7 +80,7 @@ namespace Ubique.Areas.Customer.Controllers
 				HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
 			}
 
-			TempData["success"] = "Cart updated successfully";
+			TempData["success"] = "Carrello aggiornato.";
 
 			Product product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId, includeProperties: "SubCategory.Category");
 			string productCategoryFilter = product.SubCategory.Category.Name.Split(" ")[0];

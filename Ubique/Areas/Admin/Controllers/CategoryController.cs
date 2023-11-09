@@ -29,18 +29,18 @@ namespace Ubique.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Create(Category obj)
+		public IActionResult Create(Category category)
 		{
-			if (obj.Name == obj.DisplayOrder.ToString())
+			if (category.Name == category.DisplayOrder.ToString())
 			{
 				ModelState.AddModelError("Name", "Il campo \"Ordine Visualizzazione\" non può essere uguale al campo \"Nome Categoria\".");
 			}
 
 			if (ModelState.IsValid)
 			{
-				_unitOfWork.Category.Add(obj);
+				_unitOfWork.Category.Add(category);
 				_unitOfWork.Save();
-				TempData["success"] = "Categoria creata con successo!";
+				TempData["success"] = category.Name + "è una nuova Categoria.";
 				return RedirectToAction("Index", "Category");
 			}
 

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Ubique.DataAccess.Data;
+using Ubique.DataAccess.Datza;
 using Ubique.DataAccess.Repository;
 using Ubique.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
