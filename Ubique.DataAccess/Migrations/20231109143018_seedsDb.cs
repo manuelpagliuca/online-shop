@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ubique.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedsDb : Migration
+    public partial class seedsDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,8 +33,7 @@ namespace Ubique.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    DisplayOrder = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -148,8 +147,7 @@ namespace Ubique.DataAccess.Migrations
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ListPrice = table.Column<double>(type: "float", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    SubCategoryId = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SubCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,6 +282,26 @@ namespace Ubique.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductImages_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingCarts",
                 columns: table => new
                 {
@@ -340,13 +358,13 @@ namespace Ubique.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "DisplayOrder", "Name" },
+                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "Rubinetteria Lavabo" },
-                    { 2, 2, "Rubinetteria Bidet" },
-                    { 3, 3, "Rubinetteria Cascata" },
-                    { 10, 4, "Serramenti Casa" }
+                    { 1, "Rubinetteria Lavabo" },
+                    { 2, "Rubinetteria Bidet" },
+                    { 3, "Rubinetteria Cascata" },
+                    { 10, "Serramenti Casa" }
                 });
 
             migrationBuilder.InsertData(
@@ -375,12 +393,12 @@ namespace Ubique.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Brand", "Description", "ImageUrl", "ListPrice", "Name", "Price", "SubCategoryId" },
+                columns: new[] { "Id", "Brand", "Description", "ListPrice", "Name", "Price", "SubCategoryId" },
                 values: new object[,]
                 {
-                    { 1, "Paini", "Permette di lavarsi le mani.", "\\images\\product\\b7266cec-65ea-47ae-8011-361559e03bbb.jpg", 100.0, "Turbo Compare v1", 240.0, 2 },
-                    { 2, "Paini", "Permette di lavarsi le mani.", "\\images\\product\\cbb0ed0f-6d37-4480-baaa-9ad4c6a7724f.jpg", 140.0, "Turbo Compare v2", 340.0, 2 },
-                    { 3, "NOBILI", "Permette di sporcarsi le mani.", "\\images\\product\\d12ad88d-0a26-4610-a6ed-c603728518fe.png", 120.0, "Jars 2", 440.0, 3 }
+                    { 1, "Paini", "Permette di lavarsi le mani.", 100.0, "Turbo Compare v1", 240.0, 2 },
+                    { 2, "Paini", "Permette di lavarsi le mani.", 140.0, "Turbo Compare v2", 340.0, 2 },
+                    { 3, "NOBILI", "Permette di sporcarsi le mani.", 120.0, "Jars 2", 440.0, 3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -443,6 +461,11 @@ namespace Ubique.DataAccess.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductImages_ProductId",
+                table: "ProductImages",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_SubCategoryId",
                 table: "Products",
                 column: "SubCategoryId");
@@ -483,6 +506,9 @@ namespace Ubique.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");
+
+            migrationBuilder.DropTable(
+                name: "ProductImages");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCarts");

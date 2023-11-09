@@ -12,8 +12,8 @@ using Ubique.DataAccess.Datza;
 namespace Ubique.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231107073137_RemoveImageUrl")]
-    partial class RemoveImageUrl
+    [Migration("20231109143018_seedsDb")]
+    partial class seedsDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -239,9 +239,6 @@ namespace Ubique.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -255,25 +252,21 @@ namespace Ubique.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            DisplayOrder = 1,
                             Name = "Rubinetteria Lavabo"
                         },
                         new
                         {
                             Id = 2,
-                            DisplayOrder = 2,
                             Name = "Rubinetteria Bidet"
                         },
                         new
                         {
                             Id = 3,
-                            DisplayOrder = 3,
                             Name = "Rubinetteria Cascata"
                         },
                         new
                         {
                             Id = 10,
-                            DisplayOrder = 4,
                             Name = "Serramenti Casa"
                         });
                 });
@@ -515,6 +508,28 @@ namespace Ubique.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Ubique.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+                });
+
             modelBuilder.Entity("Ubique.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -729,6 +744,15 @@ namespace Ubique.DataAccess.Migrations
                     b.Navigation("SubCategory");
                 });
 
+            modelBuilder.Entity("Ubique.Models.ProductImage", b =>
+                {
+                    b.HasOne("Ubique.Models.Product", null)
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Ubique.Models.ShoppingCart", b =>
                 {
                     b.HasOne("Ubique.Models.ApplicationUser", "ApplicationUser")
@@ -766,6 +790,11 @@ namespace Ubique.DataAccess.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("Ubique.Models.Product", b =>
+                {
+                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }

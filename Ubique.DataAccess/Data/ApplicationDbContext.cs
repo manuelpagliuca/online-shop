@@ -62,7 +62,7 @@ namespace Ubique.DataAccess.Datza
 				new Category { Id = 1, Name = "Rubinetteria Lavabo" },
 				new Category { Id = 2, Name = "Rubinetteria Bidet" },
 				new Category { Id = 3, Name = "Rubinetteria Cascata" },
-				new Category { Id = 4, Name = "Serramenti Casa" });
+				new Category { Id = 10, Name = "Serramenti Casa" });
 
 			modelBuilder.Entity<SubCategory>().HasData(
 				new SubCategory { Id = 2, Name = "Monoleva", CategoryId = 1 },
@@ -71,8 +71,7 @@ namespace Ubique.DataAccess.Datza
 				new SubCategory { Id = 5, Name = "Cascata Generico", CategoryId = 3 },
 				new SubCategory { Id = 6, Name = "Termostatico", CategoryId = 3 },
 				new SubCategory { Id = 7, Name = "Serramenti Generico", CategoryId = 10 },
-				new SubCategory { Id = 8, Name = "Infissi", CategoryId = 10 }
-				);
+				new SubCategory { Id = 8, Name = "Infissi", CategoryId = 10 });
 
 			modelBuilder.Entity<Product>().HasData(
 				new Product

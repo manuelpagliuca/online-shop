@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Ubique.DataAccess.Repository.IRepository;
@@ -20,9 +19,9 @@ namespace Ubique.Areas.Customer.Controllers
 			_unitOfWork = unitOfWork;
 		}
 
-		public IActionResult Index(string categoryFilter)
+		public IActionResult Index(string? categoryFilter)
 		{
-			if (categoryFilter == null)
+			if (string.IsNullOrEmpty(categoryFilter))
 			{
 				return View("Page404");
 			}
@@ -43,8 +42,10 @@ namespace Ubique.Areas.Customer.Controllers
 				HttpContext.Session.SetInt32(StaticDetails.SessionCart, itemsCount);
 			}
 
-			IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory,SubCategory.Category,ProductImages")
-				.Where(u => u.SubCategory.Category.Name.Contains(categoryFilter));
+			IEnumerable<Product> productList =
+				_unitOfWork.Product
+					.GetAll(includeProperties: "SubCategory,SubCategory.Category,ProductImages")
+					.Where(u => u.SubCategory.Category.Name.Contains(categoryFilter));
 
 			return View(productList);
 		}

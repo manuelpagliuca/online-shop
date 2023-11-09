@@ -263,7 +263,7 @@ namespace Ubique.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 10,
                             Name = "Serramenti Casa"
                         });
                 });
