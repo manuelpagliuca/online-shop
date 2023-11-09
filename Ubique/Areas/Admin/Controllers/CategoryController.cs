@@ -28,25 +28,6 @@ namespace Ubique.Areas.Admin.Controllers
 			return View();
 		}
 
-		[HttpPost]
-		public IActionResult Create(Category category)
-		{
-			if (category.Name == category.DisplayOrder.ToString())
-			{
-				ModelState.AddModelError("Name", "Il campo \"Ordine Visualizzazione\" non può essere uguale al campo \"Nome Categoria\".");
-			}
-
-			if (ModelState.IsValid)
-			{
-				_unitOfWork.Category.Add(category);
-				_unitOfWork.Save();
-				TempData["success"] = category.Name + "è una nuova Categoria.";
-				return RedirectToAction("Index", "Category");
-			}
-
-			return View();
-		}
-
 		public IActionResult Edit(int? id)
 		{
 			if (id == null)
@@ -63,21 +44,6 @@ namespace Ubique.Areas.Admin.Controllers
 
 			return View(fromDb);
 		}
-
-		[HttpPost]
-		public IActionResult Edit(Category obj)
-		{
-			if (ModelState.IsValid)
-			{
-				_unitOfWork.Category.Update(obj);
-				_unitOfWork.Save();
-				TempData["success"] = "Categoria aggiornata con successo!";
-				return RedirectToAction("Index", "Category");
-			}
-
-			return View();
-		}
-
 		public IActionResult Delete(int? id)
 		{
 			if (id == null || id == 0)
@@ -95,20 +61,58 @@ namespace Ubique.Areas.Admin.Controllers
 			return View(categoryFromDb);
 		}
 
-		[HttpPost, ActionName("Delete")]
-		public IActionResult DeletePOST(int? id)
+		#region API
+		[HttpGet]
+		public IActionResult GetAll()
 		{
-			Category? obj = _unitOfWork.Category.Get(u => u.Id == id);
+			return Json(new { data = _unitOfWork.Category.GetAll().ToList() });
+		}
 
-			if (obj == null)
+		[HttpPost]
+		public IActionResult Create(Category category)
+		{
+			if (ModelState.IsValid)
+			{
+				_unitOfWork.Category.Add(category);
+				_unitOfWork.Save();
+				TempData["success"] = category.Name + "è una nuova Categoria.";
+				return RedirectToAction("Index", "Category");
+			}
+
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult Edit(Category obj)
+		{
+			if (ModelState.IsValid)
+			{
+				_unitOfWork.Category.Update(obj);
+				_unitOfWork.Save();
+				TempData["success"] = "Categoria aggiornata con successo!";
+
+				return RedirectToAction("Index", "Category");
+			}
+
+			return View();
+		}
+
+		[HttpDelete, ActionName("Delete")]
+		public IActionResult DeleteREST(int? id)
+		{
+			Category? category = _unitOfWork.Category.Get(u => u.Id == id);
+
+			if (category == null)
 			{
 				return NotFound();
 			}
 
-			_unitOfWork.Category.Remove(obj);
+			_unitOfWork.Category.Remove(category);
 			_unitOfWork.Save();
-			TempData["success"] = "Categoria rimossa con successo!";
-			return RedirectToAction("Index");
+
+			return Json(new { message = category.Name +  "è stata rimossa." });
 		}
+
+		#endregion
 	}
 }
