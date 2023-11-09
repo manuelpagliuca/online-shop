@@ -24,8 +24,16 @@ namespace Ubique.ViewComponents
 			{
 				if (HttpContext.Session.GetInt32(StaticDetails.SessionCart) == null)
 				{
-					HttpContext.Session.SetInt32(StaticDetails.SessionCart,
-					_unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).Count());
+					var cartItems = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).ToList();
+
+					int numberOfItems = 0;
+
+					foreach (var item in cartItems)
+					{
+						numberOfItems += cartItems.Count;
+					}
+
+					HttpContext.Session.SetInt32(StaticDetails.SessionCart, numberOfItems);
 				}
 
 				return View(HttpContext.Session.GetInt32(StaticDetails.SessionCart));

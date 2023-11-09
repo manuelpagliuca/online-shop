@@ -21,13 +21,20 @@ namespace Ubique.Areas.Customer.Controllers
 
 		public IActionResult Index()
 		{
-			var claimsIdentity = (ClaimsIdentity)User.Identity;
-			var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+			ClaimsIdentity? claimsIdentity = (ClaimsIdentity)User.Identity;
+			Claim? claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
 			if (claim != null)
 			{
-				HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCart
-					.GetAll(u => u.ApplicationUserId == claim.Value).Count());
+				List<ShoppingCart>? carts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).ToList();
+				int itemsCount = 0;
+
+				foreach (ShoppingCart? itemCart in carts)
+				{
+					itemsCount += itemCart.Count;
+				}
+
+				HttpContext.Session.SetInt32(StaticDetails.SessionCart, itemsCount);
 			}
 
 			return View();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 using System.Security.Claims;
@@ -203,6 +204,9 @@ namespace Ubique.Areas.Customer.Controllers
 			_unitOfWork.ShoppingCart.Update(cartFromDb);
 			_unitOfWork.Save();
 
+			int currentItemsCount = HttpContext.Session.GetInt32(StaticDetails.SessionCart) ?? 1;
+			HttpContext.Session.SetInt32(StaticDetails.SessionCart, currentItemsCount + 1);
+
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -212,9 +216,7 @@ namespace Ubique.Areas.Customer.Controllers
 
 			if (cartFromDb.Count <= 1)
 			{
-				//remove that from cart
-				HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCart
-					.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+				// remove from global cart
 				_unitOfWork.ShoppingCart.Remove(cartFromDb);
 			}
 			else
@@ -224,6 +226,10 @@ namespace Ubique.Areas.Customer.Controllers
 			}
 
 			_unitOfWork.Save();
+
+			int currentItemsCount = HttpContext.Session.GetInt32(StaticDetails.SessionCart) ?? 1;
+			HttpContext.Session.SetInt32(StaticDetails.SessionCart, currentItemsCount - 1);
+
 			return RedirectToAction(nameof(Index));
 		}
 

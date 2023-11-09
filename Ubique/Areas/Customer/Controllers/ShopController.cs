@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Ubique.DataAccess.Repository.IRepository;
@@ -31,9 +32,15 @@ namespace Ubique.Areas.Customer.Controllers
 
 			if (claim != null)
 			{
-				HttpContext.Session.SetInt32(
-					StaticDetails.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value
-				).Count());
+				List<ShoppingCart>? carts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).ToList();
+				int itemsCount = 0;
+
+				foreach (ShoppingCart? itemCart in carts)
+				{
+					itemsCount += itemCart.Count;
+				}
+
+				HttpContext.Session.SetInt32(StaticDetails.SessionCart, itemsCount);
 			}
 
 			IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "SubCategory,SubCategory.Category,ProductImages")
@@ -74,14 +81,14 @@ namespace Ubique.Areas.Customer.Controllers
 			}
 			else
 			{
-				//add cart record
+				// new shopping cart record
 				_unitOfWork.ShoppingCart.Add(shoppingCart);
 				_unitOfWork.Save();
-				HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
 			}
 
+			int newCartCount = HttpContext.Session.GetInt32(StaticDetails.SessionCart) + shoppingCart.Count ?? 0;
+			HttpContext.Session.SetInt32(StaticDetails.SessionCart, newCartCount);
 			TempData["success"] = "Carrello aggiornato.";
-
 			Product product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId, includeProperties: "SubCategory.Category");
 			string productCategoryFilter = product.SubCategory.Category.Name.Split(" ")[0];
 
